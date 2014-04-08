@@ -8,6 +8,8 @@
 // 'test/spec/**/*.js'
 
 module.exports = function (grunt) {
+    //load assemble.io
+    grunt.loadNpmTasks('assemble' );
 
     // Load grunt tasks automatically
     require('load-grunt-tasks')(grunt);
@@ -68,11 +70,12 @@ module.exports = function (grunt) {
                     livereload: '<%%= connect.options.livereload %>'
                 },
                 files: [
-                    '<%%= config.app %>/{,*/}*.html',
+                    '<%%= config.app %>/template/**/*.hbs',
                     '.tmp/styles/{,*/}*.css',<% if (coffee) { %>
                     '.tmp/scripts/{,*/}*.js',<% } %>
                     '<%%= config.app %>/images/{,*/}*'
-                ]
+                ],
+                tasks:['assemble']
             }
         },
 
@@ -131,6 +134,24 @@ module.exports = function (grunt) {
                 }]
             },
             server: '.tmp'
+        },
+        //assemble io
+        assemble: {
+            options: {
+                flatten: true,
+                layout: '<%%= config.app %>/template/layouts/default.hbs',
+                partials: ['<%%= config.app %>/template/partials/**/*.hbs'],
+            },
+            pages: {
+                files: {
+                    '<%%= config.app %>/': ['<%%= config.app %>/template/pages/**/*.hbs']
+                }
+            },
+            index: {
+                files: {
+                    '<%%= config.app %>/': ['<%%= config.app %>/template/pages/index.hbs']
+                }
+            }
         },
 
         // Make sure code styles are up to par and there are no obvious mistakes
