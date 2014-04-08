@@ -427,6 +427,7 @@ module.exports = function (grunt) {
 
         grunt.task.run([
             'clean:server',
+            'assemble',
             'concurrent:server',
             'autoprefixer',
             'connect:livereload',
@@ -457,6 +458,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'clean:dist',
+        'assemble',
         'useminPrepare',
         'concurrent:dist',
         'autoprefixer',
